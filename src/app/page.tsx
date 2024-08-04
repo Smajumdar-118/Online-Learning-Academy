@@ -1,5 +1,4 @@
 import FeaturedCouses from "@/components/FeaturedCouses";
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import OurMentors from "@/components/OurMentors";
 import Testimoni from "@/components/Testimoni";
@@ -14,7 +13,7 @@ export default function Home() {
     <WhyChooseUs />
     <Testimoni />
     <OurMentors />
-    <Footer />
+    
     </>
   );
 }

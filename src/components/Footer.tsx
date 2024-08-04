@@ -31,7 +31,7 @@ const Footer = () => {
               </Link>
             </li>
             <li className="mb-2">
-              <Link href="/about">
+              <Link href="/Globe">
                 <p className="text-gray-400 hover:text-white transition duration-300">About</p>
               </Link>
             </li>
@@ -41,7 +41,7 @@ const Footer = () => {
               </Link>
             </li>
             <li className="mb-2">
-              <Link href="/contact">
+              <Link href="/Contact">
                 <p className="text-gray-400 hover:text-white transition duration-300">Contact</p>
               </Link>
             </li>

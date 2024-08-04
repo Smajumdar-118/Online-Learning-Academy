@@ -28,21 +28,27 @@ function Navbar({ className }: { className?: string }) {
         
         <MenuItem setActive={setActive} active={active} item="Courses">
           <div className="flex flex-col space-y-4 text-lg">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
+            <HoveredLink href="/courses/web-dev">Web Development</HoveredLink>
+            <HoveredLink href="/courses/interface-design">Interface Design</HoveredLink>
+            <HoveredLink href="/courses/seo">Search Engine Optimization</HoveredLink>
+            <HoveredLink href="/courses/branding">Branding</HoveredLink>
           </div>
         </MenuItem>
         
         <MenuItem setActive={setActive} active={active} item="Pricing">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+            <HoveredLink href="/sayan">Hobby</HoveredLink>
+            <HoveredLink href="/sayan">Individual</HoveredLink>
+            <HoveredLink href="/sayan">Team</HoveredLink>
+            <HoveredLink href="/sayan">Enterprise</HoveredLink>
           </div>
         </MenuItem>
+        <Link href={"/Contact"}>
+        <MenuItem setActive={setActive} active={active} item="Contact Us"></MenuItem>
+        </Link>
+        <Link href={"/Globe"}>
+        <MenuItem setActive={setActive} active={active} item="Services"></MenuItem>
+        </Link>
       </Menu>
     </div>
   );
