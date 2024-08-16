@@ -7,7 +7,7 @@ function HeroSection() {
   return (
     <section className="flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/path-to-your-background-image.jpg')" }}>
         <Spotlight
-        className="-top-56 left-0 md:left-60 md:-top-20"
+        className="-top-36 left-0 md:left-60 md:-top-20"
         fill="white"
       />
       <div className="text-center text-white px-4">

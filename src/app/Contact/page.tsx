@@ -49,7 +49,7 @@ const Contact = () => {
         w="full"
         marginTop={8}
       >
-        <Heading as="h1" size="lg" mb={6} textAlign="center">
+        <Heading as="h1" size="lg" mb={6} textAlign="center" color="white">
           Contact Us
         </Heading>
         <form onSubmit={handleSubmit}>
