@@ -19,7 +19,7 @@ function MobileNavbar({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) {
       >
         ✕
       </button>
-      <div className="flex flex-col items-start mt-8 space-y-6 text-xl">
+      <div className="flex flex-col items-start mt-8 space-y-6 text-xl text-premiumWhite">
         <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
         <Link href="/courses/1" onClick={() => setIsOpen(false)}>Web Development</Link>
         <Link href="/courses/2" onClick={() => setIsOpen(false)}>Interface Design</Link>
