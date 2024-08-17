@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 function HeroSection() {
   return (
-    <section className="flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/path-to-your-background-image.jpg')" }}>
+    <section className="flex items-center justify-center h-screen bg-cover bg-center dark:bg-black" style={{ backgroundImage: "url('/path-to-your-background-image.jpg')" }}>
         <Spotlight
         className="-top-36 left-0 md:left-60 md:-top-20"
         fill="white"
