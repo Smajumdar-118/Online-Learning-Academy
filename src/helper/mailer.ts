@@ -43,7 +43,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
           </p>
           <p style="color: #777;">
             Regards,<br>
-            Your Company Name
+            Sayan Majumdar
           </p>
         </div>
       `;
@@ -58,6 +58,11 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         pass: "0d1fa28fd246af"
       }
     });
+
+   
+
+
+
 
     // URL to be included in the email
     const url = `http://localhost:3000/verifyemail?token=${token}`;

@@ -1,9 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import axios from 'axios'
+import { toast } from "react-hot-toast";
 import {
   IconBrandGithub,
   IconUser ,
@@ -11,12 +13,38 @@ import {
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 
 export default function LoginFormDemo() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [user , setUser] = useState({
+    email : "",
+    password : ""
+  })
+  const router = useRouter();
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    try {
+     const response =  await axios.post('/api/login' , user);
+     console.log(response)
+     if (response.data.status === 200) {
+      toast.success("Successfully Logged In!");
+      
+      setUser({
+        
+        email: "",
+        password: "",
+      });
+      router.push("/");
+
+    }
+      console.log("Form submitted");
+    } catch (error) {
+      
+    }
+    
   };
   return (
     <div className="py-2  md:py-32   flex justify-center text-center dark:bg-black">
@@ -38,11 +66,13 @@ export default function LoginFormDemo() {
         
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" 
+          value={user.email} onChange={(e)=>setUser({...user , email : e.target.value})}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" 
+          value={user.password} onChange={(e)=>setUser({...user , password : e.target.value})}/>
         </LabelInputContainer>
         
 

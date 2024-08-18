@@ -17,7 +17,7 @@ export async function POST(req : NextRequest) {
     const {email , password} = reqBody;
 
     const user = await  User.findOne({email});
-    console.log(user);
+    // console.log(user);
     if(user){
        const isMatch = await  bcrypt.compare(password, user.password);
        if(isMatch){
@@ -25,7 +25,7 @@ export async function POST(req : NextRequest) {
             userid : user._id
         }
         const token = jwt.sign(payload , process.env.NEXT_PUBLIC_SECRET_KEY! , { expiresIn: '1h' })
-        const response = NextResponse.json({message : "Logged In successfull"});
+        const response = NextResponse.json({message : "Logged In successfull" , status : 200});
         response.cookies.set("token" , token , {
             httpOnly : true
         });
