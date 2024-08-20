@@ -13,6 +13,7 @@ import {
  
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 export default function SignupFormDemo() {
@@ -23,14 +24,14 @@ export default function SignupFormDemo() {
     password : ""
   })
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
+  const router = useRouter()
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/signup", user);
       console.log(response.data.status);
       if (response.data.status === 200) {
-        toast.success("Successfully signed up!");
+        toast.success("Please verify Email");
         // Clear the form by resetting the user state
         setUser({
           firstname: "",
@@ -38,6 +39,7 @@ export default function SignupFormDemo() {
           email: "",
           password: "",
         });
+        router.push('/verifyPage')
       }
   
       console.log("Form submitted");

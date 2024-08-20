@@ -4,6 +4,7 @@ import "./globals.css";
 import NavbarDemo from "@/components/NavbarDemo";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
+import { FloatingDockDemo } from "@/components/Floatdock";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <NavbarDemo />
         {children}
         <Footer />
+        <FloatingDockDemo/>
         </body>
         <Toaster
   position="top-center"
