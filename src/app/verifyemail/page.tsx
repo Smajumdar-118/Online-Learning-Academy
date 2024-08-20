@@ -1,30 +1,27 @@
 "use client";
+
 import axios from "axios";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-
-export default function VerifyEmail() {
+function VerifyEmailComponent() {
   const [verified, setverified] = useState(false);
   const [token, setToken] = useState("");
   const searchParams = useSearchParams();
 
   const router = useRouter();
 
-  const handleVerify = async()=>{
-    await axios.post("/api/verifyEmail" , {token});
+  const handleVerify = async () => {
+    await axios.post("/api/verifyEmail", { token });
     setverified(true);
-    
-  }
+  };
 
-  useEffect(()=>{
-   
-    const token  = searchParams.get('token') || "";
+  useEffect(() => {
+    const token = searchParams.get("token") || "";
     setToken(token);
     console.log(token);
-
-  }  ,[])
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -33,10 +30,10 @@ export default function VerifyEmail() {
           Verify Your Email
         </h2>
         <p className="text-black dark:text-gray-300 mb-6 text-center">
-          To verify your email please click on the button given below. After successdul verification you can login to your account again or you can directly move to home page.
+          To verify your email please click on the button given below. After successful verification, you can log in to your account again or directly move to the home page.
         </p>
         <p className="text-black dark:text-gray-300 mb-6 text-center">
-          If verification failed please try again after sometime else contact with us
+          If verification failed please try again after some time, else contact us.
         </p>
         <button
           onClick={handleVerify}
@@ -46,11 +43,22 @@ export default function VerifyEmail() {
         </button>
         {verified && (
           <p className="text-green-500 text-center mt-4">
-           You are verified. Click <Link href="/" className="text-blue-700">here</Link> to redirect home page
+            You are verified. Click{" "}
+            <Link href="/" className="text-blue-700">
+              here
+            </Link>{" "}
+            to redirect to the home page.
           </p>
-          
         )}
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailComponent />
+    </Suspense>
   );
 }
