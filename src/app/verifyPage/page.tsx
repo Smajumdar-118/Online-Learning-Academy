@@ -1,8 +1,7 @@
 'use client';
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/moving-border";
 import Image from "next/image";
-import Link from "next/link";
+
 
 export default function VerificationPage() {
   return (
@@ -17,7 +16,7 @@ export default function VerificationPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mb-1"
+          className="mb-8"
         >
           <Image
             src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
@@ -43,7 +42,7 @@ export default function VerificationPage() {
           transition={{ delay: 0.7 }}
           className="text-gray-600 dark:text-gray-400 mt-4"
         >
-          We've sent a verification link to your email. Please check your inbox and verify your email address to continue.
+          We&#39;ve sent a verification link to your email. Please check your inbox and verify your email address to continue.
         </motion.p>
 
         <motion.div
@@ -52,9 +51,9 @@ export default function VerificationPage() {
           transition={{ delay: 0.9 }}
           className="mt-8"
         >
-          <Button className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800 text-xl">
-            <Link href="/">Back to Home</Link>
-          </Button>
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600">
+            Back to Home
+          </button>
         </motion.div>
       </motion.div>
     </div>
