@@ -8,6 +8,7 @@ import {
   IconExchange,
   IconBrandX,
   IconBrandGithub,
+  IconUser,
   IconLayoutNavbarCollapse,
 } from "@tabler/icons-react";
 import {
@@ -58,9 +59,9 @@ export function FloatingDockDemo() {
       href: "#",
     },
     {
-      title: "Changelog",
+      title: "Profile",
       icon: (
-        <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
     },
