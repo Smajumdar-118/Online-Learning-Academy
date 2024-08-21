@@ -10,10 +10,10 @@ export async function POST(req: NextRequest){
     try {
         const reqBody = await req.json();
         const {token} = reqBody;
-        // console.log(token);
+        console.log(token);
         const user = await User.findOne({verifyToken : token} , {verifyTokenExpiry : Date.now() + 3600000});
         // console.log(user);
-        if(!user) NextResponse.json({message : "You are not verified"});
+        if(!user) return NextResponse.json({message : "You are not verified" ,status : 400} );
         user.isVerified = true;
         user.verifyToken = undefined;
         user.verifyTokenExpiry = undefined;
@@ -22,6 +22,6 @@ export async function POST(req: NextRequest){
         // return NextResponse.json(user);
     
     } catch (error:any) {
-        return NextResponse.json({message : error.message})
+        return NextResponse.json({message : "Not verified" , status: 400})
     }
 }

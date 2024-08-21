@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
+import { toast } from "react-hot-toast";
 
 function VerifyEmailComponent() {
   const [verified, setverified] = useState(false);
@@ -13,8 +14,21 @@ function VerifyEmailComponent() {
   const router = useRouter();
 
   const handleVerify = async () => {
-    await axios.post("/api/verifyEmail", { token });
-    setverified(true);
+    try {
+      const response = await axios.post("/api/verifyEmail", { token });
+      console.log(response);
+      if(response.data.status == 200){
+
+        setverified(true);
+        toast.success("Email verified successfully!");
+      }
+      else{
+        toast.error("Verification failed. Please try again.");
+      }
+    } catch (error) {
+      setverified(false);
+      toast.error("Verification failed. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -50,6 +64,7 @@ function VerifyEmailComponent() {
             to redirect to the home page.
           </p>
         )}
+        
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
   IconBrandGithub,
   IconUser ,
   IconBrandGoogle,
-  IconBrandOnlyfans,
+  IconLoader,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,10 +22,12 @@ export default function LoginFormDemo() {
     email : "",
     password : ""
   })
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
      const response =  await axios.post('/api/login' , user);
      console.log(response)
@@ -33,16 +35,26 @@ export default function LoginFormDemo() {
       toast.success("Successfully Logged In!");
       
       setUser({
-        
         email: "",
         password: "",
       });
       router.push("/");
 
     }
-      console.log("Form submitted");
+     else if(response.data.status === 404){
+      toast.error("Please Verify Your Email");
+      setUser({
+        email: "",
+        password: "",
+      });
+     } 
+     else{
+      toast.error("Invalid Credential");
+     }
     } catch (error) {
-      
+      console.log(error);
+    }finally {
+      setLoading(false);
     }
     
   };
@@ -80,7 +92,11 @@ export default function LoginFormDemo() {
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
-          Log In &rarr;
+          {loading ? (
+                <IconLoader className="animate-spin h-5 w-5 mx-auto" />
+              ) : (
+                "Log In →"
+              )}
           <BottomGradient />
         </button>
 

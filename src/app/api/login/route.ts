@@ -21,16 +21,22 @@ export async function POST(req : NextRequest) {
     if(user){
        const isMatch = await  bcrypt.compare(password, user.password);
        if(isMatch){
-        const payload = {
-            userid : user._id
-        }
-        const token = jwt.sign(payload , process.env.NEXT_PUBLIC_SECRET_KEY! , { expiresIn: '1h' })
-        const response = NextResponse.json({message : "Logged In successfull" , status : 200});
-        response.cookies.set("token" , token , {
-            httpOnly : true
-        });
-        
-        return response;
+            if(user.isVerified === "true"){
+
+                const payload = {
+                    userid : user._id
+                }
+                const token = jwt.sign(payload , process.env.NEXT_PUBLIC_SECRET_KEY! , { expiresIn: '1h' })
+                const response = NextResponse.json({message : "Logged In successfull" , status : 200});
+                response.cookies.set("token" , token , {
+                    httpOnly : true
+                });
+                
+                return response;
+            }
+            else {
+                return NextResponse.json({message : "You are not Verifed" , status : 404});
+            }
        }
     
     }

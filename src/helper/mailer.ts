@@ -64,7 +64,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
 
 
     // URL to be included in the email
-    const url = `http://localhost:3000/verifyemail?token=${token}`;
+    const url = `${process.env.DOMAIN}/verifyemail?token=${token}`;
 
     // Create mail options
     const mailOptions = {
