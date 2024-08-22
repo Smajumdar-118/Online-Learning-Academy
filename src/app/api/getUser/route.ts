@@ -13,7 +13,6 @@ export async function POST(req: NextRequest) {
         const cookieStore = cookies();
         const Token = cookieStore.get('token')?.value || "";
         const decodedToken = jwt.verify(Token, process.env.NEXT_PUBLIC_SECRET_KEY!);
-        console.log(decodedToken);
         const { userid } = decodedToken as { userid: string };
         const user = await User.findOne({_id :userid})
         if(!user) {

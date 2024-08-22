@@ -1,6 +1,8 @@
 "use client";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 interface User {
   _id: string;
@@ -13,12 +15,11 @@ interface User {
 
 function Page() {
   const [user, setUser] = useState<User | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.post("/api/getUser");
-        console.log("API Response:", response.data);
         setUser(response.data.user || null);
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -28,6 +29,14 @@ function Page() {
 
     fetchUser();
   }, []);
+  const handleLogout = async() => {
+    try {
+      const respone = await axios.get("/api/logout");
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
@@ -47,6 +56,12 @@ function Page() {
               <p className="text-lg"><span className="font-semibold">Is Verified:</span> {user.isVerified}</p>
               <p className="text-lg"><span className="font-semibold">Is Admin:</span> {user.isAdmin}</p>
             </div>
+            <button
+              onClick={handleLogout}
+              className="mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
           </div>
         ) : (
           <div className="flex items-center justify-center">

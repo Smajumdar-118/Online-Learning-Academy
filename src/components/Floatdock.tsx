@@ -9,6 +9,7 @@ import {
   IconBrandX,
   IconBrandGithub,
   IconUser,
+  IconBrandLinkedin,
   IconLayoutNavbarCollapse,
 } from "@tabler/icons-react";
 import {
@@ -29,7 +30,7 @@ export function FloatingDockDemo() {
       icon: (
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "/",
     },
 
     {
@@ -67,18 +68,18 @@ export function FloatingDockDemo() {
     },
 
     {
-      title: "Twitter",
+      title: "Linkedin",
       icon: (
-        <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "https://www.linkedin.com/in/sayan-majumdar-01ab62259/",
     },
     {
       title: "GitHub",
       icon: (
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "https://github.com/Smajumdar-118",
     },
   ];
   return (
