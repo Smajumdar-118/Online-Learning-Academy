@@ -49,7 +49,7 @@ function Page() {
             <h1 className="text-3xl font-bold mb-6">User Profile</h1>
             <img
               // src={user.profilePhoto || "/images/ABS_6792.jpg"}
-              src={"/images/ABS_6792.jpg"}
+              src={"/images/ABS_6792.JPG"}
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
             />
