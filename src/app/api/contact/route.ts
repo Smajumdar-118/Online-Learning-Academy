@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       savedContact,
       message: "Message sent successfully.",
-      status: 201,
+      status: 200,
     });
   } catch (error) {
     console.error("Error saving contact message:", error);

@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import {toast} from 'react-hot-toast';
 
 interface User {
   _id: string;
@@ -31,7 +32,9 @@ function Page() {
   }, []);
   const handleLogout = async() => {
     try {
-      const respone = await axios.get("/api/logout");
+      const response = await axios.get("/api/logout");
+      console.log(response);
+      toast.success(response.data.message);
       router.push("/");
     } catch (error) {
       console.log(error);
@@ -45,7 +48,8 @@ function Page() {
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-6">User Profile</h1>
             <img
-              src={user.profilePhoto || "/images/ABS_6792.jpg"}
+              // src={user.profilePhoto || "/images/ABS_6792.jpg"}
+              src={"/images/ABS_6792.jpg"}
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
             />

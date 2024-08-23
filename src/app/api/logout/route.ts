@@ -8,7 +8,7 @@ Connect();
 
 export async function GET(req : NextRequest) {
     try {
-        const response = NextResponse.json({message : "Successfully Logged Out" });
+        const response = NextResponse.json({message : "Successfully Logged Out" , status : 200 });
         response.cookies.delete('token');
         return response;
     } catch (error) {

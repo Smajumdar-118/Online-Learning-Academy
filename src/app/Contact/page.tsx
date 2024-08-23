@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { Box, Button, FormControl, FormLabel, Input, Textarea, Stack, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
+import axios from 'axios';
+import {toast} from 'react-hot-toast';
 
 const MotionBox = motion(Box);
 
@@ -21,10 +23,24 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+  
+    try {
+     const response = await axios.post("/api/contact", formData);
+     console.log(response);
+     if(response.data.status > 210) {
+      toast.error(response.data.message);
+     }
+     else toast.success("Message Sent Successfully");
+     setFormData({
+      name: '',
+      email: '',
+      message: ''})
+    } catch (error) {
+      console.log("Form Submit Failed"+error);
+    }
+    
   };
 
   return (
