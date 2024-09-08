@@ -11,7 +11,7 @@ export async function POST(req: NextRequest){
         const reqBody = await req.json();
         const {token} = reqBody;
         console.log(token);
-        const user = await User.findOne({verifyToken : token} , {verifyTokenExpiry : Date.now() + 3600000});
+        const user = await User.findOne({verifyToken : token});
         // console.log(user);
         if(!user) return NextResponse.json({message : "You are not verified" ,status : 400} );
         user.isVerified = true;
