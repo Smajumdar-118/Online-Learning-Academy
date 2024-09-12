@@ -6,22 +6,23 @@ import { NextRequest, NextResponse } from "next/server";
 
 Connect();
 
-export async function POST(req: NextRequest){
+
+export async function POST(req:NextRequest) {
     try {
         const reqBody = await req.json();
-        const {token} = reqBody;
+        const {token,email,pass} = reqBody;
         // console.log(token);
-        const user = await User.findOne({verifyToken : token});
+        const user = await User.findOne({forgotPasswordToken : token});
         // console.log(user);
         if(!user) return NextResponse.json({message : "You are not verified" ,status : 400} );
-        user.isVerified = true;
-        user.verifyToken = undefined;
-        user.verifyTokenExpiry = undefined;
+        if(user.email === email){
+            user.password = pass;
+            user.forgotPasswordToken = undefined;
+            user.forgotPasswordExpiry = undefined;
+        }
         await user.save();
         return NextResponse.json({message : "Verified" , status : 200});
-        // return NextResponse.json(user);
-    
-    } catch (error:any) {
+    } catch (error) {
         return NextResponse.json({message : "Not verified" , status: 400})
     }
 }
