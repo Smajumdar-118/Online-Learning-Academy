@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState("");
@@ -9,15 +11,25 @@ export default function ForgetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [token, setToken] = useState("");
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async(e:any) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
     // Handle the form submission here
-
+    const res = await axios.post("/api/SetPass" , {token , email , confirmPassword} );
+    console.log(res.data.status);
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    if (res.data.status === 200) {
+      toast.success("Password has been changed Successfully");
+      router.push("/");
+    }
+    else toast.error("Please Verify Your Email");
   };
 
   useEffect(() => {
@@ -26,7 +38,7 @@ export default function ForgetPassword() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 to-purple-600">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 to-purple-600 text-black">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-md p-8 space-y-6">
         <h2 className="text-2xl font-bold text-center text-gray-800">Forgot Password</h2>
         <p className="text-gray-600 text-center">
@@ -34,7 +46,6 @@ export default function ForgetPassword() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
           <div className="relative">
             <AiOutlineMail className="absolute text-gray-500 top-3 left-3" />
             <input
@@ -47,7 +58,6 @@ export default function ForgetPassword() {
             />
           </div>
 
-          {/* Password Field */}
           <div className="relative">
             <AiOutlineLock className="absolute text-gray-500 top-3 left-3" />
             <input
@@ -59,8 +69,6 @@ export default function ForgetPassword() {
               required
             />
           </div>
-
-          {/* Confirm Password Field */}
           <div className="relative">
             <AiOutlineLock className="absolute text-gray-500 top-3 left-3" />
             <input
@@ -73,7 +81,6 @@ export default function ForgetPassword() {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition duration-200"

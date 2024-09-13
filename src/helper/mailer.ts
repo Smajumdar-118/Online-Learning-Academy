@@ -64,7 +64,10 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
 
 
     // URL to be included in the email
-    const url = `${process.env.DOMAIN}/verifyemail?token=${token}`;
+    const url =
+      emailType === 'VERIFY'
+        ? `${process.env.DOMAIN}/verifyemail?token=${token}`
+        : `${process.env.DOMAIN}/ForgetPass?token=${token}`;
 
     // Create mail options
     const mailOptions = {
