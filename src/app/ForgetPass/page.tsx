@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
-export default function ForgetPassword() {
+ function ForgetPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -99,4 +99,12 @@ export default function ForgetPassword() {
       </div>
     </div>
   );
+}
+
+export default function ForgetPasswordCOmponent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ForgetPassword />
+    </Suspense>
+  )
 }
