@@ -6,7 +6,7 @@ import {
   IconTerminal2,
   IconNewSection,
   IconExchange,
-  IconBrandX,
+  IconLogin2 ,
   IconBrandGithub,
   IconUser,
   IconBrandLinkedin,
@@ -48,16 +48,11 @@ export function FloatingDockDemo() {
       href: "#",
     },
     {
-      title: "Aceternity UI",
+      title: "Login",
       icon: (
-        <Image
-          src="https://assets.aceternity.com/logo-dark.png"
-          width={20}
-          height={20}
-          alt="Aceternity Logo"
-        />
+        <IconLogin2 stroke={2} />
       ),
-      href: "#",
+      href: "/LoginPage",
     },
     {
       title: "Profile",

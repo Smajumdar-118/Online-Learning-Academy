@@ -5,15 +5,18 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import { toast } from "react-hot-toast";
+import {IconLoader} from "@tabler/icons-react";
 
 function VerifyEmailComponent() {
   const [verified, setverified] = useState(false);
   const [token, setToken] = useState("");
   const searchParams = useSearchParams();
+  const [loading , setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleVerify = async () => {
+    setLoading(true);
     try {
       const response = await axios.post("/api/verifyEmail", { token });
       console.log(response);
@@ -28,6 +31,8 @@ function VerifyEmailComponent() {
     } catch (error) {
       setverified(false);
       toast.error("Verification failed. Please try again.");
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -52,16 +57,20 @@ function VerifyEmailComponent() {
         <button
           onClick={handleVerify}
           className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Verify your Email
+        >{loading ? (
+          <IconLoader className="animate-spin h-5 w-5 mx-auto" />
+        ) : (
+          " Verify your Email"
+        )}
+         
         </button>
         {verified && (
           <p className="text-green-500 text-center mt-4">
             You are verified. Click{" "}
-            <Link href="/" className="text-blue-700">
+            <Link href="/LoginPage" className="text-blue-700">
               here
             </Link>{" "}
-            to redirect to the home page.
+            to redirect to the login page.
           </p>
         )}
         

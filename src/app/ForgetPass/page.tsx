@@ -2,7 +2,9 @@
 import { useEffect, useState, Suspense } from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
+import {IconLoader} from "@tabler/icons-react";
 import { toast } from "react-hot-toast";
+
 import axios from "axios";
 
  function ForgetPassword() {
@@ -10,26 +12,38 @@ import axios from "axios";
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [token, setToken] = useState("");
+  const [loading , setLoading] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const handleSubmit = async(e:any) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+    setLoading(true);
+    try {
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+      // Handle the form submission here
+      const res = await axios.post("/api/SetPass" , {token , email , confirmPassword} );
+      console.log(res.data.status);
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      if (res.data.status === 200) {
+        toast.success("Password has been changed Successfully");
+        router.push("/LoginPage");
+        toast.success("Please login again");
+      }
+      else toast.error("Please Verify Your Email");
+
+    } catch (error) {
+      console.log(error);
+    } finally{
+      setLoading(false);
     }
-    // Handle the form submission here
-    const res = await axios.post("/api/SetPass" , {token , email , confirmPassword} );
-    console.log(res.data.status);
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    if (res.data.status === 200) {
-      toast.success("Password has been changed Successfully");
-      router.push("/");
-    }
-    else toast.error("Please Verify Your Email");
+    
   };
 
   useEffect(() => {
@@ -84,8 +98,12 @@ import axios from "axios";
           <button
             type="submit"
             className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-          >
-            Reset Password
+          > {loading ? (
+            <IconLoader className="animate-spin h-5 w-5 mx-auto" />
+          ) : (
+            "Reset Password"
+          )}
+            
           </button>
         </form>
 
