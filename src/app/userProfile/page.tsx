@@ -1,9 +1,8 @@
 "use client";
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import {toast} from 'react-hot-toast';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 interface User {
   _id: string;
@@ -11,33 +10,47 @@ interface User {
   email: string;
   isVerified: string;
   isAdmin: string;
-  profilePhoto: string; // New property for profile photo URL
+  profilePhoto: string;
 }
 
 function Page() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.post("/api/getUser");
-        setUser(response.data.user || null);
+        if (!response.data.user) {
+          if (!sessionStorage.getItem("redirected")) {
+            toast.error("You are not logged in. Please login to see your Dashboard");
+            sessionStorage.setItem("redirected", "true"); // Set the redirection flag
+            router.push("/LoginPage");
+          }
+          return;
+        }
+        setUser(response.data.user);
+        sessionStorage.removeItem("redirected"); // Clear the flag if the user is found
       } catch (error) {
         console.error("Error fetching user:", error);
-        setUser(null);
+        if (!sessionStorage.getItem("redirected")) {
+          toast.error("An error occurred while fetching your user details.");
+          sessionStorage.setItem("redirected", "true");
+          router.push("/LoginPage");
+        }
       }
     };
 
     fetchUser();
-  }, []);
-  const handleLogout = async() => {
+  }, [router]);
+
+  const handleLogout = async () => {
     try {
       const response = await axios.get("/api/logout");
-      console.log(response);
       toast.success(response.data.message);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -48,17 +61,26 @@ function Page() {
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-6">User Profile</h1>
             <img
-              // src={user.profilePhoto || "/images/ABS_6792.jpg"}
               src={"/images/ABS_6792.JPG"}
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
             />
             <div className="space-y-4">
-              <p className="text-lg"><span className="font-semibold">User ID:</span> {user._id}</p>
-              <p className="text-lg"><span className="font-semibold">Username:</span> {user.username}</p>
-              <p className="text-lg"><span className="font-semibold">Email:</span> {user.email}</p>
-              <p className="text-lg"><span className="font-semibold">Is Verified:</span> {user.isVerified}</p>
-              <p className="text-lg"><span className="font-semibold">Is Admin:</span> {user.isAdmin}</p>
+              <p className="text-lg">
+                <span className="font-semibold">User ID:</span> {user._id}
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold">Username:</span> {user.username}
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold">Email:</span> {user.email}
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold">Is Verified:</span> {user.isVerified}
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold">Is Admin:</span> {user.isAdmin}
+              </p>
             </div>
             <button
               onClick={handleLogout}
