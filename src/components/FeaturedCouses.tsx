@@ -6,31 +6,37 @@ import Link from "next/link";
 
 const courses = [
     {
+      id:100,
       title: "Web Development",
       description: "This is a description for Course 1.Lorem23",
       imageUrl: "https://thumbs.dreamstime.com/b/web-development-coding-programming-internet-technology-business-concept-web-development-coding-programming-internet-technology-122084136.jpg",
     },
     {
+      id:101,
       title: "UI/UX Designing",
       description: "This is a description for Course 2.",
       imageUrl: "https://img.freepik.com/free-vector/website-development-banner_33099-1687.jpg",
     },
     {
+      id:102,
       title: "SEO Optimization",
       description: "This is a description for Course 2.",
       imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA3JaLeUYNwvRe2q1Ne0B1TipRcqmbMMuMvg&s",
     },
     {
+      id:103,
       title: "Interface Design",
       description: "This is a description for Course 2.",
       imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpem4gPPWGHaXXDKzvWs-N1JPs_PQry8_eTQ&s",
     },
     {
+      id:104,
       title: "DS and Algorithms",
       description: "This is a description for Course 2.",
       imageUrl: "https://media.licdn.com/dms/image/C5612AQEz0hpmCQQ9xA/article-cover_image-shrink_600_2000/0/1645599766887?e=2147483647&v=beta&t=bofydXF-Sf5Q_t5T8xX0Cz1Yuk4uSLma4sUb61WhogY",
     },
     {
+      id:105,
       title: "Machine Learning",
       description: "This is a description for Course 3.",
       imageUrl: "https://www.simplilearn.com/ice9/free_resources_article_thumb/Deep-Learning-vs-Machine-Learning.jpg",
@@ -54,7 +60,7 @@ function FeaturedCouses() {
                 <button className="p-[3px] relative">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
         <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
-          <Link href={'#_'}>Learn More</Link>
+          <Link href={`/roadmaps/${course.id}`}>Learn More</Link>
         </div>
       </button>
               </div>
@@ -66,7 +72,7 @@ function FeaturedCouses() {
       <a href="#_" className="relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md">
 <span className="w-full h-full bg-gradient-to-br from-[#ff8a05] via-[#ff5478] to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-[#ff5478] group-hover:to-[#ff8a05] absolute"></span>
 <span className="relative px-6 py-3 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
-<span className="relative text-white">View All Courses</span>
+<span className="relative text-white">View All Roadmaps</span>
 </span>
 </a>
       </div>
