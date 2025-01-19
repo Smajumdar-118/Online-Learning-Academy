@@ -1,8 +1,8 @@
 // app/roadmaps/[roadmapId]/page.tsx
 import { notFound } from 'next/navigation';
-import { Connect } from '@/dbConfig/dbConfig'; // Make sure this path is correct
+import { Connect } from '@/dbConfig/dbConfig'; 
 import Roadmap from '@/models/roadmapMode';
-// import { RoadmapType } from '@/types'; // Ensure this path is correct
+// import { RoadmapType } from '@/types'; 
 
 interface RoadmapPageProps {
   params: {
@@ -11,8 +11,8 @@ interface RoadmapPageProps {
 }
 
 export async function generateStaticParams() {
-  await Connect(); // Ensure DB connection
-  const roadmaps = await Roadmap.find({}, { id: 1 }); // Fetch only the IDs of roadmaps
+  await Connect();
+  const roadmaps = await Roadmap.find({}, { id: 1 }); 
   return roadmaps.map((roadmap) => ({
     roadmapId: roadmap.id.toString(),
   }));
@@ -25,7 +25,7 @@ const RoadmapPage: React.FC<RoadmapPageProps> = async ({ params }) => {
   const roadmap = await Roadmap.findOne({ id: roadmapId });
 
   if (!roadmap) {
-    notFound(); // Return 404 if the roadmap isn't found
+    notFound(); 
   }
 
   // Render the roadmap details here

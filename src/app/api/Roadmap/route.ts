@@ -14,7 +14,7 @@ export async function POST(req:NextRequest){
         const reqBody = await req.json();
         const roadmap = new Roadmap(reqBody);
         await roadmap.save();
-        return NextResponse.json({success:true, roadmap},{status:201});
+        return NextResponse.json({roadmap},{status:201});
     } catch (error) {
         console.error('Error creating roadmap:', error);
         return NextResponse.json(
@@ -27,7 +27,7 @@ export async function POST(req:NextRequest){
 export async function GET(){
     try {
         const roadmaps = await Roadmap.find();
-        return NextResponse.json({success:true, roadmaps}, {status :201});
+        return NextResponse.json({roadmaps});
     } catch (error) {
         console.error('Error fetching roadmaps:', error);
         return NextResponse.json(
