@@ -1,64 +1,31 @@
-// app/roadmaps/[roadmapId]/page.tsx
+// src/app/roadmaps/[roadmapId]/page.tsx
+
 import { notFound } from 'next/navigation';
-import { Connect } from '@/dbConfig/dbConfig'; 
+import { Connect } from '@/dbConfig/dbConfig';
 import Roadmap from '@/models/roadmapMode';
-// import { RoadmapType } from '@/types'; 
+import RoadmapPageComponent from '@/components/RoadmapPage';
 
 interface RoadmapPageProps {
-  params: {
-    roadmapId: string;
-  };
+  params: Promise<{ roadmapId: string }>;
 }
 
-export async function generateStaticParams() {
-  await Connect();
-  const roadmaps = await Roadmap.find({}, { id: 1 }); 
-  return roadmaps.map((roadmap) => ({
-    roadmapId: roadmap.id.toString(),
-  }));
-}
+const RoadmapPage = async ({ params }: RoadmapPageProps) => {
+  try {
+    await Connect();
+    const roadmapId = await parseInt((await params).roadmapId, 10);
+    if (isNaN(roadmapId)) {
+      notFound(); 
+    }
+    const roadmap = await Roadmap.findOne({ id: roadmapId });
+    if (!roadmap) {
+      notFound(); 
+    }
 
-const RoadmapPage: React.FC<RoadmapPageProps> = async ({ params }) => {
-  const roadmapId = parseInt(params.roadmapId, 10); // Convert roadmapId from string to number
-
-  await Connect(); // Ensure the database connection is established
-  const roadmap = await Roadmap.findOne({ id: roadmapId });
-
-  if (!roadmap) {
+    return <RoadmapPageComponent roadmap={roadmap} />;
+  } catch (error) {
+    console.error("Error rendering roadmap page:", error);
     notFound(); 
   }
-
-  // Render the roadmap details here
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold">{roadmap.title}</h1>
-      <p className="mt-2 text-lg">{roadmap.description}</p>
-
-      {/* Display image if available */}
-      {roadmap.image && (
-        <img src={roadmap.image} alt={roadmap.title} className="mt-6 w-full h-auto" />
-      )}
-
-      <h2 className="mt-6 text-2xl font-semibold">Created By: {roadmap.createdBy}</h2>
-
-      {/* Category if exists */}
-      {roadmap.category && <p className="mt-2 text-lg">Category: {roadmap.category}</p>}
-
-      <h3 className="mt-6 text-xl font-semibold">Important Links</h3>
-      <ul className="list-disc pl-6">
-        {roadmap.importantLinks.map((link:any , index:any) => (
-          <li key={index} className="mt-2">
-            <a href={link.url} className="text-blue-500" target="_blank" rel="noopener noreferrer">
-              {link.label}
-            </a>
-            {link.description && <p className="mt-1 text-sm text-gray-600">{link.description}</p>}
-          </li>
-        ))}
-      </ul>
-
-      {/* Add more content for roadmap as needed */}
-    </div>
-  );
 };
 
 export default RoadmapPage;
