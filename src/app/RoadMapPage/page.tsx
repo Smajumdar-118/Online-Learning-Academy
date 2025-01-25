@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Image from "next/image";
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface Roadmap {
   id: number;
@@ -18,6 +19,17 @@ const RoadmapsPage = () => {
   const [roadmaps, setRoadmaps] = useState<Roadmap[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const handleAddToFavourites = async (id: number) => {
+    try {
+      const response = await axios.post('/api/favourites', { roadmapId : id}); 
+      console.log(response.status);
+      if(response.status == 201) toast.success('Successfully Added!')
+      if(response.status == 405) alert('Please Signin to save in your profile!')
+    } catch (error) {
+      console.error('Error adding to favourites:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchRoadmaps = async () => {
@@ -96,15 +108,15 @@ const RoadmapsPage = () => {
             href="https://twitter.com/mannupaaji"
             target="__blank"
             className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-          >
-            Try now →
+          ><Link href={`/roadmaps/${roadmap.id}`}>Try now →</Link>
+            
           </CardItem>
           <CardItem
             translateZ={20}
             as="button"
             className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-          >
-            Add Favourite
+          ><button onClick={()=> handleAddToFavourites(roadmap.id)}>Add Favourite</button>
+            
           </CardItem>
         </div>
       </CardBody>

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { any } from "zod";
 
 const UserSchema = new mongoose.Schema({
     username : {
@@ -22,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     isAdmin : {
         type : String,
         default : false
+    },
+    favourites: {
+        type: [String], 
+        default: []
     },
     forgotPasswordToken : String,
     forgotPasswordExpiry : String,
