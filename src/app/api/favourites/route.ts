@@ -27,7 +27,6 @@ export async function POST(req: NextRequest){
             await userRoadmap.save();
         }
         return NextResponse.json({roadmapId}, {status : 201});
-
         
     } catch (error) {
         console.log("Internal Error");
