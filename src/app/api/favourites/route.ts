@@ -13,10 +13,10 @@ export async function POST(req: NextRequest){
         const decodedToken = jwt.verify(Token, process.env.NEXT_PUBLIC_SECRET_KEY!);
         const { userid } = decodedToken as { userid: string };
         if(!userid) return NextResponse.json({messgage :"Couldn't found"} , {status : 405});
-        console.log(userid);
+        // console.log(userid);
         const reqBody = await req.json();
         const { roadmapId } = reqBody;
-        console.log(roadmapId);
+        // console.log(roadmapId);
         const userRoadmap = await User.findById(userid);
         if (!userRoadmap) {
             return NextResponse.json({ message: "User not found" }, { status: 404 });
