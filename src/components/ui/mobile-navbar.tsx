@@ -21,6 +21,7 @@ function MobileNavbar({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) {
       </button>
       <div className="flex flex-col items-start mt-8 space-y-6 text-xl text-premiumWhite">
         <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
+        <Link href="/userProfile" onClick={() => setIsOpen(false)}>My Profile</Link>
         <Link href="/courses/1" onClick={() => setIsOpen(false)}>Web Development</Link>
         <Link href="/courses/2" onClick={() => setIsOpen(false)}>Interface Design</Link>
         <Link href="/courses/3" onClick={() => setIsOpen(false)}>SEO</Link>

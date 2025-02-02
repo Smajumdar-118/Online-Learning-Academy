@@ -14,8 +14,8 @@ interface User {
   _id: string;
   username: string;
   email: string;
-  isVerified: boolean;
-  isAdmin: boolean;
+  isVerified: string;
+  isAdmin: string;
   profilePhoto: string;
   favorites: { title: string; description: string; image: string }[];
 }
@@ -114,8 +114,9 @@ export default function ProfilePage() {
             <div className="space-y-3">
               <p className="text-lg"><span className="font-semibold">Username:</span> {user.username}</p>
               <p className="text-lg"><span className="font-semibold">Email:</span> {user.email}</p>
-              <p className="text-lg"><span className="font-semibold">Verified:</span> {user.isVerified ? "✅ Yes" : "❌ No"}</p>
-              <p className="text-lg"><span className="font-semibold">Admin:</span> {user.isAdmin ? "✅ Yes" : "❌ No"}</p>
+              <p className="text-lg"><span className="font-semibold">Verified:</span> {JSON.parse(user.isVerified )? "✅ Yes" : "❌ No"}</p>
+              <p className="text-lg"><span className="font-semibold">Admin:</span> {JSON.parse(user.isAdmin) ? "✅ Yes" : "❌ No"}
+              </p>
             </div>
 
             {/* Profile Photo Uploader */}
@@ -141,43 +142,62 @@ export default function ProfilePage() {
       </motion.div>
 
       {/* Right Section: Roadmaps */}
-      <motion.div 
-        initial={{ opacity: 0, x: 50 }} 
-        animate={{ opacity: 1, x: 0 }} 
-        transition={{ duration: 0.5 }} 
-        className="w-full md:w-2/3 p-6 bg-gray-900/50 backdrop-blur-md rounded-2xl shadow-lg"
-      >
-        <h2 className="text-2xl font-bold text-white mb-4">Your Selected Roadmaps</h2>
-        <button className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-md shadow-md hover:opacity-90" onClick={() => router.push("/RoadMapPage")}>
-         <span className="text-lg">+</span> New Roadmap
-      </button>
-        {roadmaps.length > 0  ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {roadmaps.map((roadmap, index) => (
-              <motion.div 
-                key={index} 
-                whileHover={{ scale: 1.05 }} 
-                transition={{ duration: 0.3 }}
-              >
-                 <Link href={`/roadmaps/${roadmap.id}`} passHref>
-                <Card className="p-4 bg-gray-800 text-white rounded-lg shadow-md flex items-center space-x-4">
-                  <img src={roadmap.image} alt={roadmap.title} className="w-16 h-16 rounded-md object-cover" />
-                  <div>
-                    <h3 className="text-lg font-semibold">{roadmap.title}</h3>
-                    <p className="text-gray-400 text-sm">{roadmap.description}</p>
-                  </div>
-                </Card>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-400 text-lg">No roadmaps selected yet.</p>
-        )}
-        <Button onClick={() => router.push("/RoadMapPage")} className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Browse All Roadmaps
-        </Button>
-      </motion.div>
+      {/* Right Section: Roadmaps */}
+<motion.div 
+  initial={{ opacity: 0, x: 50 }} 
+  animate={{ opacity: 1, x: 0 }} 
+  transition={{ duration: 0.5 }} 
+  className="w-full md:w-2/3 p-6 bg-gray-900/50 backdrop-blur-md rounded-2xl shadow-lg relative"
+>
+  {/* Heading and Button Wrapper */}
+  <div className="flex flex-wrap justify-between items-center mb-4">
+    <h2 className="text-2xl font-bold text-white">Your Selected Roadmaps</h2>
+    <button 
+      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-md shadow-md hover:opacity-90"
+      onClick={() => router.push("/RoadMapPage")}
+    >
+      <span className="text-lg">+</span> New Roadmap
+    </button>
+  </div>
+
+  {/* Roadmaps Section */}
+  {roadmaps.length > 0 ? (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {roadmaps.map((roadmap, index) => (
+        <motion.div 
+          key={index} 
+          whileHover={{ scale: 1.05 }} 
+          transition={{ duration: 0.3 }}
+        >
+          <Link href={`/roadmaps/${roadmap.id}`} passHref>
+            <Card className="p-4 bg-gray-800 text-white rounded-lg shadow-md flex items-center space-x-4">
+              <img 
+                src={roadmap.image} 
+                alt={roadmap.title} 
+                className="w-16 h-16 rounded-md object-cover" 
+              />
+              <div>
+                <h3 className="text-lg font-semibold">{roadmap.title}</h3>
+                <p className="text-gray-400 text-sm">{roadmap.description}</p>
+              </div>
+            </Card>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-gray-400 text-lg">No roadmaps selected yet.</p>
+  )}
+
+  {/* Browse All Roadmaps Button */}
+  <Button 
+    onClick={() => router.push("/RoadMapPage")} 
+    className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Browse All Roadmaps
+  </Button>
+</motion.div>
+
     </div>
   );
 }
