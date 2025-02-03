@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
     const uploadResult = await cloudinary.uploader.upload(base64Image, {
       folder: "profile_photos",
       public_id: `${userid}-${Date.now()}`,
+      format: "jpg"
     });
     
      user.profilePhoto = uploadResult.secure_url;
