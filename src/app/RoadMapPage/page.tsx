@@ -26,9 +26,9 @@ const RoadmapsPage = () => {
       const response = await axios.post('/api/favourites', { roadmapId : id}); 
       console.log(response.status);
       if(response.status == 201) toast.success('Successfully Added!')
-      if(response.status == 405) alert('Please Signin to save in your profile!')
+      if(response.status == 405) toast.error('Please Signin to save in your profile!')
     } catch (error) {
-      console.error('Error adding to favourites:', error);
+      toast.error('Please Signin to save in your profile!')
     }
   };
 
@@ -109,11 +109,10 @@ const RoadmapsPage = () => {
                 href={`/roadmaps/${roadmap.id}`}
                 className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
               >
-                Try now →
+                check now →
               </CardItem>
               <CardItem
                 translateZ={20}
-                as="button"
                 className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
               >
                 <button onClick={() => handleAddToFavourites(roadmap.id)}>
