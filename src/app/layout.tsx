@@ -5,6 +5,7 @@ import NavbarDemo from "@/components/NavbarDemo";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import { FloatingDockDemo } from "@/components/Floatdock";
+import { AuthProvider } from "@/context/AuthContext"; // Import AuthProvider
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <NavbarDemo />
-        {children}
-        <Footer />
-        <FloatingDockDemo/>
-        </body>
-        <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
+        {/* Wrap the entire app in AuthProvider */}
+        <AuthProvider>
+          <NavbarDemo />
+          {children}
+          <Footer />
+          <FloatingDockDemo />
+        </AuthProvider>
+
+        {/* Toaster for notifications */}
+        <Toaster position="top-center" reverseOrder={false} />
+      </body>
     </html>
   );
 }

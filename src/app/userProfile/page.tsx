@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import { Router } from "next/router";
 
 interface User {
   _id: string;
@@ -28,6 +30,7 @@ interface Roadmap {
 
 
 export default function ProfilePage() {
+  const { setLoggedIn } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [roadmaps, setRoadmaps] = useState<any[]>([]);
   const [profilePhoto, setProfilePhoto] = useState<string>(
@@ -81,13 +84,21 @@ export default function ProfilePage() {
   
 
   const handleLogout = async () => {
-    try {
-      const response = await axios.get("/api/logout");
-      toast.success(response.data.message);
-      router.push("/");
-    } catch (error) {
-      console.error(error);
+    try{
+    const response = await fetch("/api/logout", {
+      method: "GET",
+      credentials: "include", // Ensure cookies are sent
+    });
+
+    if (response.ok) {
+      setLoggedIn(false); // Update the global auth state
+      router.push('/');
+    } else {
+      console.error("Failed to log out");
     }
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
   };
 
   return (

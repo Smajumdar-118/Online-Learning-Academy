@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   IconHome,
@@ -21,9 +21,10 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 export function FloatingDockDemo() {
+  const { isLoggedIn } = useAuth();
   const links = [
     {
       title: "Home",
@@ -34,11 +35,11 @@ export function FloatingDockDemo() {
     },
 
     {
-      title: "Products",
+      title: "Roadmaps",
       icon: (
         <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: "/RoadMapPage",
     },
     {
       title: "Components",
@@ -47,21 +48,21 @@ export function FloatingDockDemo() {
       ),
       href: "#",
     },
-    {
-      title: "Login",
-      icon: (
-        <IconLogin2 stroke={2} />
-      ),
-      href: "/LoginPage",
-    },
-    {
-      title: "Profile",
-      icon: (
-        <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "/userProfile",
-    },
-
+    ...(isLoggedIn
+      ? [
+          {
+            title: "Profile",
+            icon: <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300"/>,
+            href: "/userProfile",
+          },
+        ]
+      : [
+          {
+            title: "Login",
+            icon: <IconLogin2 className="h-full w-full text-neutral-500 dark:text-neutral-300"/>,
+            href: "/LoginPage",
+          },
+        ]),
     {
       title: "Linkedin",
       icon: (

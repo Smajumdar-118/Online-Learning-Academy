@@ -14,8 +14,10 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginFormDemo() {
+  const { setLoggedIn } = useAuth();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -32,9 +34,10 @@ export default function LoginFormDemo() {
     setLoading(true);
     try {
       const response = await axios.post('/api/login', user);
-      console.log(response);
+      // console.log(response);
       if (response.data.status === 200) {
         toast.success("Successfully Logged In!");
+        setLoggedIn(true);
         setUser({ email: "", password: "" });
         router.push("/");
       } else if (response.data.status === 404) {
